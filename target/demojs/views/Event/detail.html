@@ -1,0 +1,93 @@
+<header ng-switch on="$location.path().indexOf('/Events/new') > -1">
+    <h3 ng-switch-when="true">Create a new Event</h3>
+    <h3 ng-switch-when="false">View or edit Event</h3>
+</header>
+<form id="EventForm" name="EventForm" class="form-horizontal" role="form">
+    <div ng-show="displayError" class="alert alert-danger">
+        <strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+    </div>
+    
+
+    <div class="form-group" ng-class="{'has-error': EventForm.title.$invalid}">
+        <label for="title" class="col-sm-2 control-label">Title</label>
+        <div id="titleControls" class="col-sm-10">
+            <input id="title" name="title" type="text" requiredclass="form-control" ng-model="event.title" placeholder="Enter the Event Title"></input>
+            <span class="help-block error" ng-show="EventForm.title.$error.required">required</span> 
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': EventForm.summary.$invalid}">
+        <label for="summary" class="col-sm-2 control-label">Summary</label>
+        <div id="summaryControls" class="col-sm-10">
+            <input id="summary" name="summary" type="text" ng-maxlength="140"class="form-control" ng-model="event.summary" placeholder="Enter the Event Summary"></input>
+            <span class="help-block error" ng-show="EventForm.summary.$error.maxlength">maximum length is 140</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': EventForm.format.$invalid}">
+        <label for="format" class="col-sm-2 control-label">Format</label>
+        <div id="formatControls" class="col-sm-10">
+        <select id="format" name="format" class="form-control" ng-model="event.format" ng-options="f for f in formatList" required >
+            <option value="">Choose a Format</option>
+        </select>
+        <span class="help-block error" ng-show="EventForm.format.$error.required">required</span> 
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': EventForm.description.$invalid}">
+        <label for="description" class="col-sm-2 control-label">Description</label>
+        <div id="descriptionControls" class="col-sm-10">
+            <input id="description" name="description" type="text" ng-maxlength="2000"class="form-control" ng-model="event.description" placeholder="Enter the Event Description"></input>
+            <span class="help-block error" ng-show="EventForm.description.$error.maxlength">maximum length is 2000</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': EventForm.level.$invalid}">
+        <label for="level" class="col-sm-2 control-label">Level</label>
+        <div id="levelControls" class="col-sm-10">
+            <input id="level" name="level" type="text"class="form-control" ng-model="event.level" placeholder="Enter the Event Level"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': EventForm.start.$invalid}">
+        <label for="start" class="col-sm-2 control-label">Start</label>
+        <div id="startControls" class="col-sm-10">
+            <datetime id="start" name="start" ng-model="event.start" placeholder="Enter the Event Start"></datetime>
+            <span class="help-block error" ng-show="EventForm.start.$error.datetimeFormat">does not match format "yyyy-MM-dd hh:mm:ss" (e.g. 2013-12-01 22:00:00)</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': EventForm.end.$invalid}">
+        <label for="end" class="col-sm-2 control-label">End</label>
+        <div id="endControls" class="col-sm-10">
+            <datetime id="end" name="end" ng-model="event.end" placeholder="Enter the Event End"></datetime>
+            <span class="help-block error" ng-show="EventForm.end.$error.datetimeFormat">does not match format "yyyy-MM-dd hh:mm:ss" (e.g. 2013-12-01 22:00:00)</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': EventForm.room.$invalid}">
+        <label for="room" class="col-sm-2 control-label">Room</label>
+        <div id="roomControls" class="col-sm-10">
+            <input id="room" name="room" type="text" requiredclass="form-control" ng-model="event.room" placeholder="Enter the Event Room"></input>
+            <span class="help-block error" ng-show="EventForm.room.$error.required">required</span> 
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': EventForm.speakers.$invalid}">
+        <label for="speakers" class="col-sm-2 control-label">Speakers</label>
+        <div id="speakersControls" class="col-sm-10">
+            <select id="speakers" name="speakers" multiple class="form-control" ng-model="speakersSelection" ng-options="s.text for s in speakersSelectionList">
+                <option value="">Choose a Speakers</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button id="saveEvent" name="saveEvent" class="btn btn-primary" ng-disabled="isClean() || EventForm.$invalid" ng-click="save()"><span class="glyphicon glyphicon-ok-sign"></span> Save</button>
+            <button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</button>
+            <button id="deleteEvent" name="deleteEvent" class="btn btn-danger" ng-show="event.id" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+    </div>
+</form>

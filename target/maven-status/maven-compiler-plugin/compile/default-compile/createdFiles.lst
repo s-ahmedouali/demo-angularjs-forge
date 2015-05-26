@@ -1,0 +1,6 @@
+org\funcoding\bbl\model\User.class
+org\funcoding\bbl\Format.class
+org\funcoding\bbl\model\Event.class
+org\funcoding\bbl\rest\EventEndpoint.class
+org\funcoding\bbl\rest\UserEndpoint.class
+org\funcoding\bbl\rest\RestApplication.class
